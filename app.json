@@ -21,14 +21,14 @@
 			"type": "PerspectiveCamera",
 			"name": "Camera",
 			"layers": 1,
-			"matrix": [0.9927708010644314,0,-0.12002556625105873,0,0.013081315967350083,0.9940430932059816,0.10819985222747096,0,0.1193105851400019,-0.10898774632720966,0.9868569579346675,0,1.6262509961218057,0.8984495368942883,3.510521454369992,1],
+			"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-2,1.5,2,1],
 			"up": [0,1,0],
-			"fov": 50,
+			"fov": 65.84,
 			"zoom": 1,
 			"near": 0.01,
 			"far": 1000,
 			"focus": 10,
-			"aspect": 1.4483695652173914,
+			"aspect": 1.670846394984326,
 			"filmGauge": 35,
 			"filmOffset": 0
 		}
@@ -194,6 +194,22 @@
 			},
 			{
 				"uuid": "b209c10a-0d5e-4f06-8e73-49eb9da3f423",
+				"type": "PlaneGeometry",
+				"width": 1,
+				"height": 1,
+				"widthSegments": 1,
+				"heightSegments": 1
+			},
+			{
+				"uuid": "53ba2072-b24f-4b3a-a464-b31ab856e17c",
+				"type": "PlaneGeometry",
+				"width": 1,
+				"height": 1,
+				"widthSegments": 1,
+				"heightSegments": 1
+			},
+			{
+				"uuid": "af515363-a8d5-431d-acf2-2e0847e175b1",
 				"type": "PlaneGeometry",
 				"width": 1,
 				"height": 1,
@@ -638,6 +654,48 @@
 				"stencilFail": 7680,
 				"stencilZFail": 7680,
 				"stencilZPass": 7680
+			},
+			{
+				"uuid": "b839efba-64f4-4df4-89a2-fc0a15ba2cf5",
+				"type": "MeshStandardMaterial",
+				"color": 16777215,
+				"roughness": 1,
+				"metalness": 0,
+				"emissive": 0,
+				"envMapIntensity": 1,
+				"depthFunc": 3,
+				"depthTest": true,
+				"depthWrite": true,
+				"colorWrite": true,
+				"stencilWrite": false,
+				"stencilWriteMask": 255,
+				"stencilFunc": 519,
+				"stencilRef": 0,
+				"stencilFuncMask": 255,
+				"stencilFail": 7680,
+				"stencilZFail": 7680,
+				"stencilZPass": 7680
+			},
+			{
+				"uuid": "3d7fff27-0308-4594-9b4a-14ddf15f6fb1",
+				"type": "MeshStandardMaterial",
+				"color": 16777215,
+				"roughness": 1,
+				"metalness": 0,
+				"emissive": 0,
+				"envMapIntensity": 1,
+				"depthFunc": 3,
+				"depthTest": true,
+				"depthWrite": true,
+				"colorWrite": true,
+				"stencilWrite": false,
+				"stencilWriteMask": 255,
+				"stencilFunc": 519,
+				"stencilRef": 0,
+				"stencilFuncMask": 255,
+				"stencilFail": 7680,
+				"stencilZFail": 7680,
+				"stencilZPass": 7680
 			}],
 		"object": {
 			"uuid": "f82d7dca-ca06-4224-abbb-4b1bf27ce446",
@@ -949,6 +1007,26 @@
 							"geometry": "b209c10a-0d5e-4f06-8e73-49eb9da3f423",
 							"material": "b43be612-ad59-42e6-9ad5-f03970999067"
 						}]
+				},
+				{
+					"uuid": "2eb9ed68-d447-4d77-825e-1e1e8543bdaa",
+					"type": "Mesh",
+					"name": "ground",
+					"layers": 1,
+					"matrix": [200,0,0,0,0,4.440892098500626e-14,-200,0,0,1,2.220446049250313e-16,0,0,-25,0,1],
+					"up": [0,1,0],
+					"geometry": "53ba2072-b24f-4b3a-a464-b31ab856e17c",
+					"material": "b839efba-64f4-4df4-89a2-fc0a15ba2cf5"
+				},
+				{
+					"uuid": "52daf545-b5bb-442e-863f-59e8bdc29798",
+					"type": "Mesh",
+					"name": "sky",
+					"layers": 1,
+					"matrix": [200,0,0,0,0,-150,1.8369701987210297e-14,0,0,-1.2246467991473532e-16,-1,0,0,25,100,1],
+					"up": [0,1,0],
+					"geometry": "af515363-a8d5-431d-acf2-2e0847e175b1",
+					"material": "3d7fff27-0308-4594-9b4a-14ddf15f6fb1"
 				}],
 			"fog": {
 				"type": "Fog",
