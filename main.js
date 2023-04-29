@@ -51,6 +51,9 @@ let app = {
             const { position, quaternion } = camera;
             this.controls = new SpatialControls(position, quaternion, dom);
             this.controls.settings.rotation.sensitivity = 4.0;
+            this.controls.position.x = -3.0;
+            this.controls.position.y = 1.5;
+            this.controls.position.z = 1.2;
             // this.controls.settings.translation.enabled = false;
             this.setEventHandler("update", ({time}) => {
                 this.controls.update(time);
@@ -109,18 +112,18 @@ let app = {
             camera.updateProjectionMatrix();
         };
 
-        this.changeCamera = function(f) {
-            f(camera);
-            camera.aspect = this.width / this.height;
-            camera.updateProjectionMatrix();
-        };
+        this.getCamera = () => camera;
 
         this.setScene = function (value) {
             scene = value;
         };
 
+        this.getSceneObject = function(name) {
+            return scene.getObjectByName(name);
+        }
+
         this.setPixelRatio = function (pixelRatio) {
-            renderer.setPixelRatio( pixelRatio );
+            renderer.setPixelRatio(pixelRatio);
         };
 
         this.setSize = function (width, height) {
@@ -132,7 +135,7 @@ let app = {
                 camera.updateProjectionMatrix();
             }
 
-            renderer.setSize( width, height );
+            renderer.setSize(width, height);
         };
 
         function dispatch(array, event) {
@@ -228,11 +231,72 @@ loader.load('app.json', function (text) {
     player.setSize( window.innerWidth, window.innerHeight );
     player.play();
 
+    function key_to_digit(key) {
+        // are you okay?
+        switch(key) {
+            case "1": return 1;
+            case "2": return 2;
+            case "3": return 3;
+            case "4": return 4;
+            case "5": return 5;
+            case "6": return 6;
+            case "7": return 7;
+            case "8": return 8;
+            case "9": return 9;
+            case "0": return 0;
+            default: return null;
+        }
+    }
+
+    const ancors = [
+        "hall_0",
+        "hall_1",
+        "main_window",
+        "main_room_0",
+        "second_window"
+    ];
+
     // pointer_drag
-    player.setEventHandler("pointerdown", (e) => {
-        console.log("moise down");
+    player.setEventHandler("keydown", (e) => {
+        console.log("key:", e.key);
+        let num = key_to_digit(e.key);
+        if(num !== null) {
+            console.log("go to", num);
+            // player.controls.position =
+            
+        }
         // player.controls.position.x += 0.1;
     });
+
+    let intersects = [];
+
+    player.setEventHandler("pointerdown", _ => {
+        console.log(intersects);
+        if(intersects.length > 0){
+            let ancor = intersects[0].object.position;
+            console.log(ancor);
+            player.controls.position.x = ancor.x;
+            player.controls.position.z = ancor.z;
+        }
+    });
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+
+    player.setEventHandler("pointermove", e => {
+        pointer.x = (e.x / window.innerWidth ) * 2 - 1;
+	    pointer.y = - (e.y / window.innerHeight ) * 2 + 1;
+    });
+
+    player.setEventHandler("update", () => {
+        // update the picking ray with the camera and pointer position
+        raycaster.setFromCamera(pointer, player.getCamera());
+
+        // calculate objects intersecting the picking ray
+        intersects = raycaster.intersectObjects(
+            ancors.map(x => player.getSceneObject(x))
+        );
+    })
 
     document.body.appendChild( player.dom );
 
