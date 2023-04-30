@@ -4,7 +4,8 @@ function ClickMove(app, controls, player) {
     app.scene.getObjectByName("ancors").visible = false;
 
     const click_map = {
-        main_window_plane: {distance: 1.2}
+        main_window_plane: {distance: 1.2},
+        second_window: {distance: 1.2},
     };
 
     const move_map = {

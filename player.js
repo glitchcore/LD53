@@ -25,7 +25,7 @@ function Player(app, controls) {
         this.target_point = target;
 
         this.player_velocity = this.target_point
-            .clone().sub(controls.position).normalize().multiplyScalar(0.004);
+            .clone().sub(controls.position).normalize().multiplyScalar(0.002);
 
         this.is_moving = true;
     }
