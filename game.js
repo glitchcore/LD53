@@ -1,6 +1,9 @@
 import * as THREE from 'three';
+import { SpatialControls } from "spatial-controls";
 
 function game(app) {
+    let controls;
+    
     const ancors = [
         "hall_0",
         "hall_1",
@@ -19,8 +22,8 @@ function game(app) {
     app.setEventHandler("pointerdown", _ => {
         if(intersects.length > 0){
             let ancor = intersects[0].object.position;
-            app.controls.position.x = ancor.x;
-            app.controls.position.z = ancor.z;
+            controls.position.x = ancor.x;
+            controls.position.z = ancor.z;
         }
     });
 
@@ -40,6 +43,19 @@ function game(app) {
         intersects = raycaster.intersectObjects(
             ancors.map(x => app.getSceneObject(x))
         );
+    });
+
+
+    const { position, quaternion } = app.camera;
+    controls = new SpatialControls(position, quaternion, app.dom);
+    controls.settings.rotation.sensitivity = 4.0;
+    controls.position.x = -3.0;
+    controls.position.y = 1.5;
+    controls.position.z = 1.2;
+
+    // this.controls.settings.translation.enabled = false;
+    app.setEventHandler("update", ({time}) => {
+        controls.update(time);
     });
 }
 

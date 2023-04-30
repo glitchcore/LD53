@@ -7,14 +7,13 @@ loader.load('app.json', function (text) {
     var app = new App();
 
     app.load(JSON.parse(text));
-    app.setSize( window.innerWidth, window.innerHeight );
+    app.setSize(window.innerWidth, window.innerHeight);
+    game(app);
     app.play();
 
     document.body.appendChild(app.dom);
 
-    window.addEventListener( 'resize', function () {
+    window.addEventListener('resize', function () {
         app.setSize(window.innerWidth, window.innerHeight);
     });
-
-    game(app);
 });

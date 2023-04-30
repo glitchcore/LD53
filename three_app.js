@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { SpatialControls } from "spatial-controls";
 
 let App = function () {
     var renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -45,17 +44,6 @@ let App = function () {
             pointermove: [],
             update: []
         };
-
-        const { position, quaternion } = this.camera;
-        this.controls = new SpatialControls(position, quaternion, dom);
-        this.controls.settings.rotation.sensitivity = 4.0;
-        this.controls.position.x = -3.0;
-        this.controls.position.y = 1.5;
-        this.controls.position.z = 1.2;
-        // this.controls.settings.translation.enabled = false;
-        this.setEventHandler("update", ({time}) => {
-            this.controls.update(time);
-        });
 
         var scriptWrapParams = 'player,renderer,scene,camera';
         var scriptWrapResultObj = {};
