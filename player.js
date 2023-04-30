@@ -6,6 +6,8 @@ function Player(app, controls) {
     this.is_moving = false;
 
     app.setEventHandler("update", ({time, delta}) => {
+        // TODO warning of overshooting target
+        
         const MOVEMENT_DELTA = 0.1;
 
         if(this.is_moving) {
@@ -23,7 +25,7 @@ function Player(app, controls) {
         this.target_point = target;
 
         this.player_velocity = this.target_point
-            .clone().sub(controls.position).multiplyScalar(0.001);
+            .clone().sub(controls.position).normalize().multiplyScalar(0.004);
 
         this.is_moving = true;
     }

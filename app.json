@@ -21,7 +21,7 @@
 			"type": "PerspectiveCamera",
 			"name": "Camera",
 			"layers": 1,
-			"matrix": [-0.9780382549925142,0,0.20842545854860692,0,0.09915452760684577,0.8795906261867451,0.46528347271257436,0,-0.18332907959802866,0.4757313636122908,-0.860273281143457,0,5.804391837602566,11.537671334738615,-16.294883081478524,1],
+			"matrix": [-0.9759051336392024,0,0.21819525690685873,0,0.09604444321545773,0.8979112279863452,0.42957058975619633,0,-0.1959199710700336,0.4401765857653649,-0.8762761769441545,0,-4.432436135548606,5.074699465712428,-4.681928890748046,1],
 			"up": [0,1,0],
 			"fov": 65.84,
 			"zoom": 1,
@@ -304,13 +304,27 @@
 				"stencilZPass": 7680
 			},
 			{
-				"uuid": "faad5edf-c876-4b8f-bba5-56ee4a21fdc4",
-				"type": "MeshStandardMaterial",
+				"uuid": "98c87ae0-729a-4cec-a31c-aa7eb72ebec9",
+				"type": "MeshPhysicalMaterial",
 				"color": 16777215,
 				"roughness": 1,
 				"metalness": 0,
+				"sheen": 0,
+				"sheenColor": 0,
+				"sheenRoughness": 1,
 				"emissive": 0,
+				"specularIntensity": 1,
+				"specularColor": 16777215,
+				"clearcoat": 0,
+				"clearcoatRoughness": 0,
+				"iridescence": 0,
+				"iridescenceIOR": 1.3,
+				"iridescenceThicknessRange": [100,400],
 				"envMapIntensity": 1,
+				"reflectivity": 0.5,
+				"transmission": 0,
+				"thickness": 0,
+				"attenuationColor": 16777215,
 				"depthFunc": 3,
 				"depthTest": true,
 				"depthWrite": true,
@@ -347,12 +361,12 @@
 				"stencilZPass": 7680
 			},
 			{
-				"uuid": "a1c6dbba-c59d-4008-946a-99f83711906b",
+				"uuid": "54d60d02-1622-41cc-a664-05fd9ae368fc",
 				"type": "MeshStandardMaterial",
 				"color": 16777215,
 				"roughness": 1,
 				"metalness": 0,
-				"emissive": 0,
+				"emissive": 16777215,
 				"envMapIntensity": 1,
 				"side": 2,
 				"depthFunc": 3,
@@ -721,8 +735,11 @@
 				"stencilZPass": 7680
 			},
 			{
-				"uuid": "046040f2-02cd-410b-9993-9935ff9c7741",
-				"type": "MeshNormalMaterial",
+				"uuid": "b19ef1dc-2afd-47aa-bc0e-ed08001bf822",
+				"type": "MeshBasicMaterial",
+				"color": 16715535,
+				"reflectivity": 1,
+				"refractionRatio": 0.98,
 				"depthFunc": 3,
 				"depthTest": true,
 				"depthWrite": true,
@@ -737,13 +754,11 @@
 				"stencilZPass": 7680
 			},
 			{
-				"uuid": "3d7fff27-0308-4594-9b4a-14ddf15f6fb1",
-				"type": "MeshStandardMaterial",
-				"color": 16777215,
-				"roughness": 1,
-				"metalness": 0,
-				"emissive": 0,
-				"envMapIntensity": 1,
+				"uuid": "80d388ea-d57c-45a3-b945-d1f49836371b",
+				"type": "MeshBasicMaterial",
+				"color": 4717823,
+				"reflectivity": 1,
+				"refractionRatio": 0.98,
 				"depthFunc": 3,
 				"depthTest": true,
 				"depthWrite": true,
@@ -911,7 +926,7 @@
 					"matrix": [9,0,0,0,0,1.5543122344752192e-15,-7,0,0,1,2.220446049250313e-16,0,-0.5,0,1.4996572454851576,1],
 					"up": [0,1,0],
 					"geometry": "31fddf1c-1831-400f-8b60-0f165b22b134",
-					"material": "faad5edf-c876-4b8f-bba5-56ee4a21fdc4"
+					"material": "98c87ae0-729a-4cec-a31c-aa7eb72ebec9"
 				},
 				{
 					"uuid": "4b639831-6bf9-448e-b222-6b860a0a4d0d",
@@ -969,7 +984,7 @@
 							"matrix": [3.5,0,0,0,0,2.5,0,0,0,0,1,0,-3.25,1.25,0,1],
 							"up": [0,1,0],
 							"geometry": "86cd69f8-5806-406e-9abc-43bb0a65b450",
-							"material": "a1c6dbba-c59d-4008-946a-99f83711906b"
+							"material": "54d60d02-1622-41cc-a664-05fd9ae368fc"
 						},
 						{
 							"uuid": "15abc507-c642-44ba-9640-61d6d79d8d80",
@@ -1207,7 +1222,7 @@
 					"matrix": [200,0,0,0,0,4.440892098500626e-14,-200,0,0,1,2.220446049250313e-16,0,0,-25,0,1],
 					"up": [0,1,0],
 					"geometry": "53ba2072-b24f-4b3a-a464-b31ab856e17c",
-					"material": "046040f2-02cd-410b-9993-9935ff9c7741"
+					"material": "b19ef1dc-2afd-47aa-bc0e-ed08001bf822"
 				},
 				{
 					"uuid": "52daf545-b5bb-442e-863f-59e8bdc29798",
@@ -1217,14 +1232,14 @@
 					"matrix": [200,0,0,0,0,-150,1.8369701987210297e-14,0,0,-1.2246467991473532e-16,-1,0,0,25,100,1],
 					"up": [0,1,0],
 					"geometry": "af515363-a8d5-431d-acf2-2e0847e175b1",
-					"material": "3d7fff27-0308-4594-9b4a-14ddf15f6fb1"
+					"material": "80d388ea-d57c-45a3-b945-d1f49836371b"
 				},
 				{
 					"uuid": "0ac37d84-250b-4a3d-850b-843b617ff8b7",
 					"type": "Mesh",
 					"name": "bed",
 					"layers": 1,
-					"matrix": [2.2,0,0,0,0,0.5,0,0,0,0,1.8,0,-4,0.25,0.9,1],
+					"matrix": [2.2,0,0,0,0,0.5,0,0,0,0,1.8,0,-3.8,0.25,1,1],
 					"up": [0,1,0],
 					"geometry": "44cd27d2-ae1b-4a9d-aa93-f3fac9158a82",
 					"material": "b09bcaa0-3a9f-4ebf-a92c-3b2b7caf262a"
@@ -1287,13 +1302,32 @@
 							"geometry": "a7769f7a-3ae5-4d81-a0ed-bf4b310241d2",
 							"material": "78c9c125-3f2c-49d7-b549-ac085a0f0772"
 						}]
-				}],
-			"fog": {
-				"type": "Fog",
-				"color": 11184810,
-				"near": 0,
-				"far": 50
-			}
+				},
+				{
+					"uuid": "aa3f9a62-a591-4179-a33b-6cc97ae7e00d",
+					"type": "DirectionalLight",
+					"name": "DirectionalLight",
+					"layers": 1,
+					"matrix": [0.9958164229949402,0.006906652580556609,-0.0911150363205421,0,0.09137634879315812,-0.07395092382116464,0.9930667770836096,0,0.00012072610870651063,-0.9972379650896409,-0.07427264913195764,0,-1.107077493612913,2.2795461261174808,1.7365191660242298,1],
+					"up": [0,1,0],
+					"color": 16777215,
+					"intensity": 1,
+					"shadow": {
+						"camera": {
+							"uuid": "8b90977c-5e85-4a1a-a062-377674ea1356",
+							"type": "OrthographicCamera",
+							"layers": 1,
+							"up": [0,1,0],
+							"zoom": 1,
+							"left": -5,
+							"right": 5,
+							"top": 5,
+							"bottom": -5,
+							"near": 0.5,
+							"far": 500
+						}
+					}
+				}]
 		}
 	},
 	"scripts": {}
