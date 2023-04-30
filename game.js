@@ -18,12 +18,18 @@ function game(app) {
     });
 
     let intersects = [];
+    let target_point = new THREE.Vector2();
+    let player_velocity = new THREE.Vector2();
+    let is_moving = false;
 
     app.setEventHandler("pointerdown", _ => {
         if(intersects.length > 0){
+            is_moving = true;
             let ancor = intersects[0].object.position;
-            controls.position.x = ancor.x;
-            controls.position.z = ancor.z;
+            target_point.x = ancor.x;
+            target_point.y = ancor.z;
+            player_velocity.x = (target_point.x - controls.position.x) * 0.001;
+            player_velocity.y = (target_point.y - controls.position.z) * 0.001;
         }
     });
 
@@ -35,7 +41,7 @@ function game(app) {
 	    pointer.y = - (e.y / window.innerHeight ) * 2 + 1;
     });
 
-    app.setEventHandler("update", () => {
+    app.setEventHandler("update", ({time, delta}) => {
         // update the picking ray with the camera and pointer position
         raycaster.setFromCamera(pointer, app.camera);
 
@@ -43,6 +49,20 @@ function game(app) {
         intersects = raycaster.intersectObjects(
             ancors.map(x => app.getSceneObject(x))
         );
+
+        const MOVEMENT_DELTA = 0.1;
+
+        if(is_moving) {
+            controls.position.x += delta * player_velocity.x;
+            controls.position.z += delta * player_velocity.y;
+
+            let target_dist = Math.pow(controls.position.x - target_point.x, 2)
+                + Math.pow(controls.position.z - target_point.y, 2);
+
+            if(target_dist < MOVEMENT_DELTA) {
+                is_moving = false;
+            }
+        }
     });
 
 
