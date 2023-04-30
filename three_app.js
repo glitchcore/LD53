@@ -102,10 +102,6 @@ let App = function () {
         this.scene = value;
     };
 
-    this.getSceneObject = function(name) {
-        return this.scene.getObjectByName(name);
-    }
-
     this.setPixelRatio = function (pixelRatio) {
         renderer.setPixelRatio(pixelRatio);
     };
@@ -171,19 +167,6 @@ let App = function () {
 
         renderer.setAnimationLoop(null);
     };
-
-    this.dispose = function () {
-        renderer.dispose();
-
-        this.camera = undefined;
-        this.scene = undefined;        this.render = function (time) {
-            dispatch(events.update, { time: time * 1000, delta: 0 /* TODO */ } );
-
-            renderer.render(scene, this.camera);
-        };
-    };
-
-    //
 
     function onKeyDown(event) {
         dispatch(events.keydown, event);

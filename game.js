@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { SpatialControls } from "spatial-controls";
 import { Player } from "./player";
-
+import { ClickMove } from './click_move';
 
 function game(app) {
     /*(new THREE.TextureLoader()).load("assets/sky.jpg", (texture) => {
@@ -25,7 +25,7 @@ function game(app) {
     }
     `;
 
-    app.getSceneObject("sky").material = new THREE.ShaderMaterial({
+    app.scene.getObjectByName("sky").material = new THREE.ShaderMaterial({
         fragmentShader: fragmentShader,
         vertexShader: vertexShader
     });
@@ -43,52 +43,11 @@ function game(app) {
     });
 
     let player = new Player(app, controls);
-    
-    const ancors = [
-        "hall_0",
-        "hall_1",
-        "main_window",
-        "main_room_0",
-        "second_window"
-    ];
 
-    // pointer_drag
-    app.setEventHandler("keydown", (e) => {
-        
-    });
+    let click_move = new ClickMove(app, controls, player);
 
-    let intersects = [];
-
-    app.setEventHandler("pointerdown", _ => {
-        if(intersects.length > 0) {
-            let ancor = intersects[0].object.position;
-            let target_point = new THREE.Vector3(
-                ancor.x,
-                controls.position.y,
-                ancor.z
-            );
-
-            player.set_target(target_point)
-        }
-    });
-
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-
-    app.setEventHandler("pointermove", e => {
-        pointer.x = (e.x / window.innerWidth ) * 2 - 1;
-	    pointer.y = - (e.y / window.innerHeight ) * 2 + 1;
-    });
-
-    app.setEventHandler("update", ({time, delta}) => {
-        // update the picking ray with the camera and pointer position
-        raycaster.setFromCamera(pointer, app.camera);
-
-        // calculate objects intersecting the picking ray
-        // TODO raycaster ignore walls
-        intersects = raycaster.intersectObjects(
-            ancors.map(x => app.getSceneObject(x))
-        );
+    click_move.setHandler(name => {
+        console.log("click on:", name);
     });
 }
 
