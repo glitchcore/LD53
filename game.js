@@ -1,8 +1,21 @@
 import * as THREE from 'three';
 import { SpatialControls } from "spatial-controls";
+import { Player } from "./player";
 
 function game(app) {
-    let controls;
+    const { position, quaternion } = app.camera;
+    let controls = new SpatialControls(position, quaternion, app.dom);
+    controls.settings.rotation.sensitivity = 4.0;
+    controls.position.x = -3.0;
+    controls.position.y = 1.5;
+    controls.position.z = 1.2;
+
+    // this.controls.settings.translation.enabled = false;
+    app.setEventHandler("update", ({time}) => {
+        controls.update(time);
+    });
+
+    let player = new Player(app, controls);
     
     const ancors = [
         "hall_0",
@@ -18,20 +31,17 @@ function game(app) {
     });
 
     let intersects = [];
-    let target_point = new THREE.Vector3();
-    let player_velocity = new THREE.Vector3();
-    let is_moving = false;
 
     app.setEventHandler("pointerdown", _ => {
         if(intersects.length > 0) {
-            is_moving = true;
             let ancor = intersects[0].object.position;
-            target_point.x = ancor.x;
-            target_point.y = controls.position.y;
-            target_point.z = ancor.z;
-            
-            player_velocity = target_point
-                .clone().sub(controls.position).multiplyScalar(0.001);
+            let target_point = new THREE.Vector3(
+                ancor.x,
+                controls.position.y,
+                ancor.z
+            );
+
+            player.set_target(target_point)
         }
     });
 
@@ -52,31 +62,6 @@ function game(app) {
         intersects = raycaster.intersectObjects(
             ancors.map(x => app.getSceneObject(x))
         );
-
-        const MOVEMENT_DELTA = 0.1;
-
-        if(is_moving) {
-            controls.position.add(player_velocity.clone().multiplyScalar(delta));
-
-            let target_dist = controls.position.distanceTo(target_point);
-
-            if(target_dist < MOVEMENT_DELTA) {
-                is_moving = false;
-            }
-        }
-    });
-
-
-    const { position, quaternion } = app.camera;
-    controls = new SpatialControls(position, quaternion, app.dom);
-    controls.settings.rotation.sensitivity = 4.0;
-    controls.position.x = -3.0;
-    controls.position.y = 1.5;
-    controls.position.z = 1.2;
-
-    // this.controls.settings.translation.enabled = false;
-    app.setEventHandler("update", ({time}) => {
-        controls.update(time);
     });
 }
 
