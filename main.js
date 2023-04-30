@@ -42,7 +42,7 @@ loader.load('app.json', function (text) {
 
     player.setEventHandler("update", () => {
         // update the picking ray with the camera and pointer position
-        raycaster.setFromCamera(pointer, player.getCamera());
+        raycaster.setFromCamera(pointer, player.camera);
 
         // calculate objects intersecting the picking ray
         intersects = raycaster.intersectObjects(

@@ -6,7 +6,6 @@ let Player = function () {
     renderer.setPixelRatio( window.devicePixelRatio ); // TODO: Use player.setPixelRatio()
 
     var loader = new THREE.ObjectLoader();
-    var camera, scene;
 
     var events = {};
 
@@ -47,7 +46,7 @@ let Player = function () {
             update: []
         };
 
-        const { position, quaternion } = camera;
+        const { position, quaternion } = this.camera;
         this.controls = new SpatialControls(position, quaternion, dom);
         this.controls.settings.rotation.sensitivity = 4.0;
         this.controls.position.x = -3.0;
@@ -69,7 +68,7 @@ let Player = function () {
         var scriptWrapResult = JSON.stringify(scriptWrapResultObj).replace( /\"/g, '' );
 
         for ( var uuid in json.scripts ) {
-            var object = scene.getObjectByProperty( 'uuid', uuid, true );
+            var object = this.scene.getObjectByProperty( 'uuid', uuid, true );
 
             if ( object === undefined ) {
                 console.warn( 'APP.Player: Script without object.', uuid );
@@ -106,19 +105,17 @@ let Player = function () {
     };
 
     this.setCamera = function(value) {
-        camera = value;
-        camera.aspect = this.width / this.height;
-        camera.updateProjectionMatrix();
+        this.camera = value;
+        this.camera.aspect = this.width / this.height;
+        this.camera.updateProjectionMatrix();
     };
 
-    this.getCamera = () => camera;
-
     this.setScene = function (value) {
-        scene = value;
+        this.scene = value;
     };
 
     this.getSceneObject = function(name) {
-        return scene.getObjectByName(name);
+        return this.scene.getObjectByName(name);
     }
 
     this.setPixelRatio = function (pixelRatio) {
@@ -129,9 +126,9 @@ let Player = function () {
         this.width = width;
         this.height = height;
 
-        if (camera) {
-            camera.aspect = this.width / this.height;
-            camera.updateProjectionMatrix();
+        if (this.camera) {
+            this.camera.aspect = this.width / this.height;
+            this.camera.updateProjectionMatrix();
         }
 
         renderer.setSize(width, height);
@@ -145,7 +142,7 @@ let Player = function () {
 
     var time, startTime, prevTime;
 
-    function animate() {
+    this.animate = () => {
         time = performance.now();
 
         try {
@@ -156,7 +153,7 @@ let Player = function () {
             console.error((e.message || e), (e.stack || ''));
         }
 
-        renderer.render(scene, camera);
+        renderer.render(this.scene, this.camera);
 
         prevTime = time;
     }
@@ -172,7 +169,7 @@ let Player = function () {
 
         dispatch(events.start, arguments);
 
-        renderer.setAnimationLoop(animate);
+        renderer.setAnimationLoop(this.animate);
     };
 
     this.stop = function () {
@@ -190,11 +187,11 @@ let Player = function () {
     this.dispose = function () {
         renderer.dispose();
 
-        camera = undefined;
-        scene = undefined;        this.render = function (time) {
+        this.camera = undefined;
+        this.scene = undefined;        this.render = function (time) {
             dispatch(events.update, { time: time * 1000, delta: 0 /* TODO */ } );
 
-            renderer.render(scene, camera);
+            renderer.render(scene, this.camera);
         };
     };
 
