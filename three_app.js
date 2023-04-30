@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { SpatialControls } from "spatial-controls";
 
-let Player = function () {
+let App = function () {
     var renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio ); // TODO: Use player.setPixelRatio()
 
@@ -21,7 +21,7 @@ let Player = function () {
         events[event].push(handler);
     }
 
-    this.load = function ( json ) {
+    this.load = function (json) {
 
         var project = json.project;
 
@@ -218,4 +218,4 @@ let Player = function () {
     }
 }
 
-export {Player};
+export {App};

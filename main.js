@@ -1,58 +1,20 @@
 import * as THREE from 'three';
-import {Player} from "./player";
+import {App} from "./three_app";
+import {game} from "./game";
 
 var loader = new THREE.FileLoader();
 loader.load('app.json', function (text) {
-    var player = new Player();
+    var app = new App();
 
-    player.load(JSON.parse(text));
-    player.setSize( window.innerWidth, window.innerHeight );
-    player.play();
+    app.load(JSON.parse(text));
+    app.setSize( window.innerWidth, window.innerHeight );
+    app.play();
 
-    const ancors = [
-        "hall_0",
-        "hall_1",
-        "main_window",
-        "main_room_0",
-        "second_window"
-    ];
-
-    // pointer_drag
-    player.setEventHandler("keydown", (e) => {
-        
-    });
-
-    let intersects = [];
-
-    player.setEventHandler("pointerdown", _ => {
-        if(intersects.length > 0){
-            let ancor = intersects[0].object.position;
-            player.controls.position.x = ancor.x;
-            player.controls.position.z = ancor.z;
-        }
-    });
-
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-
-    player.setEventHandler("pointermove", e => {
-        pointer.x = (e.x / window.innerWidth ) * 2 - 1;
-	    pointer.y = - (e.y / window.innerHeight ) * 2 + 1;
-    });
-
-    player.setEventHandler("update", () => {
-        // update the picking ray with the camera and pointer position
-        raycaster.setFromCamera(pointer, player.camera);
-
-        // calculate objects intersecting the picking ray
-        intersects = raycaster.intersectObjects(
-            ancors.map(x => player.getSceneObject(x))
-        );
-    });
-
-    document.body.appendChild( player.dom );
+    document.body.appendChild(app.dom);
 
     window.addEventListener( 'resize', function () {
-        player.setSize(window.innerWidth, window.innerHeight);
+        app.setSize(window.innerWidth, window.innerHeight);
     });
-} );
+
+    game(app);
+});
