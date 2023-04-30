@@ -8,9 +8,14 @@ function ClickMove(app, controls, player) {
     };
 
     const move_map = {
-        main_window_wall: {ancor: "main_window"},
-        main_room_0_wall_0: {ancor: "main_room_0"},
-        hall_0_wall: {ancor: "hall_0"}
+        hall_0_poi: {ancor: "hall_0_ancor"},
+        main_window_poi: {ancor: "main_window_ancor"},
+        table_poi: {ancor: "table_ancor"},
+        hall_1_poi: {ancor: "hall_1_ancor"},
+        chair_poi: {ancor: "chair_ancor"},
+        second_window_poi: {ancor: "second_window_ancor"},
+        bed_poi: {ancor: "bed_ancor"},
+        door_poi: {ancor: "door_ancor"},
     };
 
     let last_click_time = 0;
@@ -25,6 +30,9 @@ function ClickMove(app, controls, player) {
             console.log("long click");
             return;
         }
+
+        console.log("move:", move_intersects);
+        console.log("click:", click_intersects);
 
         if(click_intersects.length > 0) {
             let name = click_intersects[0].object.name;
@@ -45,11 +53,7 @@ function ClickMove(app, controls, player) {
             if(group in move_map) {
                 let ancor = app.scene.getObjectByName(move_map[group].ancor);
 
-                let target_point = new THREE.Vector3(
-                    ancor.position.x,
-                    controls.position.y,
-                    ancor.position.z
-                );
+                let target_point = ancor.position.clone();
     
                 player.set_target(target_point);
             }
