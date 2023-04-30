@@ -18,18 +18,20 @@ function game(app) {
     });
 
     let intersects = [];
-    let target_point = new THREE.Vector2();
-    let player_velocity = new THREE.Vector2();
+    let target_point = new THREE.Vector3();
+    let player_velocity = new THREE.Vector3();
     let is_moving = false;
 
     app.setEventHandler("pointerdown", _ => {
-        if(intersects.length > 0){
+        if(intersects.length > 0) {
             is_moving = true;
             let ancor = intersects[0].object.position;
             target_point.x = ancor.x;
-            target_point.y = ancor.z;
-            player_velocity.x = (target_point.x - controls.position.x) * 0.001;
-            player_velocity.y = (target_point.y - controls.position.z) * 0.001;
+            target_point.y = controls.position.y;
+            target_point.z = ancor.z;
+            
+            player_velocity = target_point
+                .clone().sub(controls.position).multiplyScalar(0.001);
         }
     });
 
@@ -46,6 +48,7 @@ function game(app) {
         raycaster.setFromCamera(pointer, app.camera);
 
         // calculate objects intersecting the picking ray
+        // TODO raycaster ignore walls
         intersects = raycaster.intersectObjects(
             ancors.map(x => app.getSceneObject(x))
         );
@@ -53,11 +56,9 @@ function game(app) {
         const MOVEMENT_DELTA = 0.1;
 
         if(is_moving) {
-            controls.position.x += delta * player_velocity.x;
-            controls.position.z += delta * player_velocity.y;
+            controls.position.add(player_velocity.clone().multiplyScalar(delta));
 
-            let target_dist = Math.pow(controls.position.x - target_point.x, 2)
-                + Math.pow(controls.position.z - target_point.y, 2);
+            let target_dist = controls.position.distanceTo(target_point);
 
             if(target_dist < MOVEMENT_DELTA) {
                 is_moving = false;
