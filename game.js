@@ -18,7 +18,8 @@ uniform sampler2D in_texture;
 uniform float time;
 
 void main() {
-    vec4 color = texture(in_texture, vuv + vec2(0., sin(time + vuv.y) * vuv.y));
+    vec2 texture_uv = vec2(1.0 - vuv.x, 1.0 - vuv.y + sin(time + vuv.y) * vuv.y);
+    vec4 color = texture(in_texture, texture_uv);
     gl_FragColor = vec4(color.r, 0.0, sin(time + vuv.x * 100.), 1.0);
 }
 `;
@@ -26,9 +27,16 @@ void main() {
 function game(app) {
     (new THREE.TextureLoader()).load("assets/sky.jpg", (texture) => {
         // app.getSceneObject("sky").material = new THREE.MeshBasicMaterial({map: texture});
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
+        context.font = 'Bold 40px Arial';
+        context.fillStyle = 'white';
+        context.fillText('Hello, world!', 0, 50);
+        let hello_texture = new THREE.CanvasTexture(canvas);
+
         let material = new THREE.ShaderMaterial({
             uniforms: {
-                in_texture: {value: texture},
+                in_texture: {value: hello_texture},
                 time: {value: 0},
             },
             fragmentShader: fragmentShader,
